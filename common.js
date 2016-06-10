@@ -107,6 +107,7 @@ $(function () {
         slow_frames = 0;
         start_time = 0;
         worst = 0;
+        last = null;
         frame_index = 0;
         frames = [];
         frames.length = N;
