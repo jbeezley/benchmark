@@ -1,27 +1,8 @@
 $(function () {
     mapboxgl.accessToken = 'pk.eyJ1IjoiamJlZXpsZXkiLCJhIjoiaHlXM01kNCJ9.od3nUvvjbGjwOAr6E7o7xQ';
 
-    $.ajax('./random.json').then(function (data) {
+    window.get_geojson().then(function (geojson) {
         var start = new Date();
-        var geojson = {
-            type: 'FeatureCollection',
-            features: data.id.filter(function (_, i) {
-                return true; // i < 100;
-            }).map(function (_, i) {
-                var x = (data.x[i] % 340) - 170;
-                var y = (data.y[i] % 160) - 80;
-                return {
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [x, y]
-                    },
-                    properties: {
-                        id: data.id[i]
-                    }
-                };
-            })
-        };
         var hover = {
             type: 'FeatureCollection',
             features: [{

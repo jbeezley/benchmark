@@ -49,11 +49,10 @@ $(function () {
     var tooltip = ui.createWidget('dom', {position: {x: 0, y: 0}});
     var $el = $(tooltip.canvas()).attr('id', 'tooltip').addClass('hidden')
 
-    d3.json('./random.json', function (err, _data) {
+
+    window.get_data().then(function (_data) {
         var start = new Date();
-        var data = _data.id.filter(function (_, i) {
-            return true; //i < 10000;
-        }).map(function (_, i) {
+        var data = _data.id.map(function (_, i) {
             return {
                 x: _data.x[i],
                 y: _data.y[i],

@@ -120,4 +120,52 @@ $(function () {
     }, 500);
     window.reset_stats();
     requestAnimationFrame(frame);
+
+    function get_size() {
+        variable = 'size';
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) == variable) {
+                return parseFloat(decodeURIComponent(pair[1]));
+            }
+        }
+    }
+
+    window.get_data = function () {
+        var n = get_size();
+        function filter(_, i) {
+            return !n || i < n;
+        }
+        return $.ajax('random.json').then(function (data) {
+            return {
+                x: data.x.filter(filter),
+                y: data.y.filter(filter),
+                id: data.id.filter(filter)
+            };
+        });
+    };
+
+    window.get_geojson = function () {
+        return window.get_data().then(function (data) {
+            return {
+                type: 'FeatureCollection',
+                features: data.id.map(function (_, i) {
+                    var x = (data.x[i] % 340) - 170;
+                    var y = (data.y[i] % 160) - 80;
+                    return {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [x, y]
+                        },
+                        properties: {
+                            id: data.id[i]
+                        }
+                    };
+                })
+            };
+        });
+    };
 });
