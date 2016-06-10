@@ -30,6 +30,7 @@ $(function () {
     var selection;
 
     d3.json('./random.json', function (err, _data) {
+        var start = new Date();
         var data = _data.id.filter(function (_, i) {
             return true; //i < 10000;
         }).map(function (_, i) {
@@ -63,5 +64,7 @@ $(function () {
             .on('mouseout.opacity', function (d) {
                 selection.style('fill', 'steelblue');
             });
+
+        window.loaded(start);
     });
 });

@@ -7,6 +7,18 @@ $(function () {
     var frame_index = 0;
     var frames = [];
     var N = 60;
+    var start = new Date();
+
+    window.loaded = function (_start) {
+        if (_start) {
+            start = _start;
+        }
+        var end = new Date();
+        $('#stat-load').text(
+            (end - start) + 'ms'
+        ).parent().css('display', '');
+    };
+
     frames.length = N;
     var i;
 
@@ -31,6 +43,8 @@ $(function () {
         '<td>dropped frames</td><td id=stat-slow></td>',
         '</tr><tr>',
         '<td>worst frame</td><td id=stat-worst></td>',
+        '</tr><tr style="display:none">',
+        '<td>load time</td><td id=stat-load></td>',
         '</tr>',
         '</table>',
         '<button style="float:right;margin:5px" onclick="reset_stats()">Reset</button>'

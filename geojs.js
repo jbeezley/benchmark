@@ -50,6 +50,7 @@ $(function () {
     var $el = $(tooltip.canvas()).attr('id', 'tooltip').addClass('hidden')
 
     d3.json('./random.json', function (err, _data) {
+        var start = new Date();
         var data = _data.id.filter(function (_, i) {
             return true; //i < 10000;
         }).map(function (_, i) {
@@ -62,5 +63,6 @@ $(function () {
 
         feature.data(data);
         map.draw();
+        window.loaded(start);
     });
 });

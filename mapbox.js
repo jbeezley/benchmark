@@ -2,6 +2,7 @@ $(function () {
     mapboxgl.accessToken = 'pk.eyJ1IjoiamJlZXpsZXkiLCJhIjoiaHlXM01kNCJ9.od3nUvvjbGjwOAr6E7o7xQ';
 
     $.ajax('./random.json').then(function (data) {
+        var start = new Date();
         var geojson = {
             type: 'FeatureCollection',
             features: data.id.filter(function (_, i) {
@@ -75,6 +76,7 @@ $(function () {
                 },
                 filter: ['==', 'id', '']
             });
+            window.loaded(start);
         });
 
         var popup = new mapboxgl.Popup({
