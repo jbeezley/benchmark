@@ -17,7 +17,8 @@ $(function () {
                 top: '10px',
                 width: '300px',
                 background: 'white',
-                border: '1px solid black'
+                border: '1px solid black',
+                'z-index': '1001'
             });
 
     var stat_html = [
