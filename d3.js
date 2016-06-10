@@ -31,7 +31,7 @@ $(function () {
 
     d3.json('./random.json', function (err, _data) {
         var data = _data.id.filter(function (_, i) {
-            return true;
+            return true; //i < 10000;
         }).map(function (_, i) {
             return {
                 x: _data.x[i],
@@ -53,7 +53,15 @@ $(function () {
             .attr('r', '10')
             .style('fill', 'steelblue')
             .style('fill-opacity', 0.9)
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide);
+            .on('mouseover.tip', tip.show)
+            .on('mouseover.color', function (d) {
+                selection.style('fill', function (e) {
+                    return e.id !== d.id ? 'steelblue' : 'red';
+                });
+            })
+            .on('mouseout.tip', tip.hide)
+            .on('mouseout.opacity', function (d) {
+                selection.style('fill', 'steelblue');
+            });
     });
 });
